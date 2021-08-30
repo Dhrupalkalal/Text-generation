@@ -32,9 +32,7 @@ n_patterns = len(dataX)
 print ("Total Patterns: ", n_patterns)
 
 X = numpy.reshape(dataX, (n_patterns, seq_length, 1))
-# normalize
 X = X / float(n_vocab)
-# one hot encode the output variable
 y = np_utils.to_categorical(dataY)
 
 model = Sequential()
@@ -50,15 +48,13 @@ start = 2
 pattern = dataX[start]
 print ("Seed:")
 print ("\"", ''.join([int_to_char[value] for value in pattern]), "\"")
-# generate characters
 for i in range(1000):
 	x = numpy.reshape(pattern, (1, len(pattern), 1))
 	x = x / float(n_vocab)
 	prediction = model.predict(x, verbose=0)
 	index = numpy.argmax(prediction)
 	result = int_to_char[index]
-	#seq_in = [int_to_char[value] for value in pattern]
+	seq_in = [int_to_char[value] for value in pattern]
 	sys.stdout.write(result)
 	pattern.append(index)
 	pattern = pattern[1:len(pattern)]
-print ("\nDone.")
